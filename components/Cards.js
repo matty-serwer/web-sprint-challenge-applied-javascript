@@ -60,21 +60,17 @@ axios
   .get("https://lambda-times-api.herokuapp.com/articles")
   .then((result) => {
     const dataSet = result.data.articles;
+    // console.log(Object.entries(dataSet));
     Object.entries(dataSet).forEach((subSet) => {
       // fix node class so they match tabs
       if (subSet[0] === "node") {
         subSet[0] = "node.js";
       }
-      for (let i = 1; i < subSet.length; i++) {
-        subSet[i].forEach((article) => {
+        subSet[1].forEach((article) => {
           cardsContainer.appendChild(cardMaker(article, subSet[0]));
         });
-      }
     });
   })
   .catch((error) => {
     console.log(error);
   });
-
-// const tabs = document.querySelectorAll(".tab");
-// console.log(tabs);
