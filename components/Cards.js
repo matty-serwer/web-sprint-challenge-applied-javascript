@@ -53,12 +53,14 @@ function cardMaker(data) {
 
 axios.get("https://lambda-times-api.herokuapp.com/articles").then((result) => {
   const dataSet = result.data.articles;
-  Object.values(dataSet).forEach(subSet => {
-      console.log(subSet)
-  })
-  console.log(dataSet)
-//   dataSet.forEach(subSet => {
-//       console.log(subSet)
-//   })
-//   console.log(dataSet);
-});
+  Object.values(dataSet).forEach((subSet) => {
+    //   console.log(subSet)
+    subSet.forEach((article) => {
+      cardsContainer.appendChild(cardMaker(article));
+      console.log(article);
+    });
+  });
+}) 
+.catch(error => {
+    console.log(error)
+})
