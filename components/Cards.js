@@ -48,19 +48,25 @@ function cardMaker(data) {
   author.appendChild(byAuthor);
   imgContainer.appendChild(image);
 
+  card.addEventListener('click', (event) => {
+    console.log(headline.textContent)
+  })
+
   return card;
 }
 
-axios.get("https://lambda-times-api.herokuapp.com/articles").then((result) => {
-  const dataSet = result.data.articles;
-  Object.values(dataSet).forEach((subSet) => {
-    //   console.log(subSet)
-    subSet.forEach((article) => {
-      cardsContainer.appendChild(cardMaker(article));
-      console.log(article);
+axios
+  .get("https://lambda-times-api.herokuapp.com/articles")
+  .then((result) => {
+    const dataSet = result.data.articles;
+    Object.values(dataSet).forEach((subSet) => {
+      //   console.log(subSet)
+      subSet.forEach((article) => {
+        cardsContainer.appendChild(cardMaker(article));
+        // console.log(article);
+      });
     });
+  })
+  .catch((error) => {
+    console.log(error);
   });
-}) 
-.catch(error => {
-    console.log(error)
-})
