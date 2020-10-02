@@ -25,7 +25,7 @@ import axios from "axios";
 
 const cardsContainer = document.querySelector(".cards-container");
 
-function cardMaker(data) {
+function cardMaker(data, topic) {
   const card = document.createElement("div");
   const headline = document.createElement("div");
   const author = document.createElement("div");
@@ -34,6 +34,7 @@ function cardMaker(data) {
   const byAuthor = document.createElement("span");
 
   card.classList.add("card");
+  card.classList.add(topic);
   headline.classList.add("headline");
   author.classList.add("author");
   imgContainer.classList.add("img-container");
@@ -48,7 +49,7 @@ function cardMaker(data) {
   author.appendChild(byAuthor);
   imgContainer.appendChild(image);
 
-  card.addEventListener('click', (event) => {
+  card.addEventListener('click', (e) => {
     console.log(headline.textContent)
   })
 
@@ -59,14 +60,31 @@ axios
   .get("https://lambda-times-api.herokuapp.com/articles")
   .then((result) => {
     const dataSet = result.data.articles;
-    Object.values(dataSet).forEach((subSet) => {
-      //   console.log(subSet)
-      subSet.forEach((article) => {
-        cardsContainer.appendChild(cardMaker(article));
-        // console.log(article);
-      });
+    // console.log(dataSet)
+    // console.log(Object.entries(dataSet))
+    Object.entries(dataSet).forEach((subSet) => {
+        if(subSet[0] === 'node') {
+            subSet[0] = 'node.js'
+        }
+        //   console.log(subSet)
+        //    console.log(subSet[0])
+           for(let i = 1; i < subSet.length; i++) {
+
+            //    cardsContainer.appendChild(cardMaker(subSet[i], subSet[0]))
+                // console.log(subSet[i]);
+                subSet[i].forEach(article => {
+                    cardsContainer.appendChild(cardMaker(article, subSet[0]))
+                })
+           }
+    //   subSet.values().forEach((article) => {
+    //     cardsContainer.appendChild(cardMaker(article));
+    //     // console.log(article);
+    //   });
     });
   })
   .catch((error) => {
     console.log(error);
   });
+
+  const tabs = document.querySelectorAll('.tab')
+  console.log(tabs)
