@@ -49,9 +49,9 @@ function cardMaker(data, topic) {
   author.appendChild(byAuthor);
   imgContainer.appendChild(image);
 
-  card.addEventListener('click', (e) => {
-    console.log(headline.textContent)
-  })
+  card.addEventListener("click", (e) => {
+    console.log(headline.textContent);
+  });
 
   return card;
 }
@@ -60,31 +60,21 @@ axios
   .get("https://lambda-times-api.herokuapp.com/articles")
   .then((result) => {
     const dataSet = result.data.articles;
-    // console.log(dataSet)
-    // console.log(Object.entries(dataSet))
     Object.entries(dataSet).forEach((subSet) => {
-        if(subSet[0] === 'node') {
-            subSet[0] = 'node.js'
-        }
-        //   console.log(subSet)
-        //    console.log(subSet[0])
-           for(let i = 1; i < subSet.length; i++) {
-
-            //    cardsContainer.appendChild(cardMaker(subSet[i], subSet[0]))
-                // console.log(subSet[i]);
-                subSet[i].forEach(article => {
-                    cardsContainer.appendChild(cardMaker(article, subSet[0]))
-                })
-           }
-    //   subSet.values().forEach((article) => {
-    //     cardsContainer.appendChild(cardMaker(article));
-    //     // console.log(article);
-    //   });
+      // fix node class so they match tabs
+      if (subSet[0] === "node") {
+        subSet[0] = "node.js";
+      }
+      for (let i = 1; i < subSet.length; i++) {
+        subSet[i].forEach((article) => {
+          cardsContainer.appendChild(cardMaker(article, subSet[0]));
+        });
+      }
     });
   })
   .catch((error) => {
     console.log(error);
   });
 
-  const tabs = document.querySelectorAll('.tab')
-  console.log(tabs)
+// const tabs = document.querySelectorAll(".tab");
+// console.log(tabs);
